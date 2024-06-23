@@ -1,0 +1,45 @@
+DASHlink Flight Data Frequently Asked Questions
+
+APFD: What do the values of this status refer to?
+Auto Pilot Flight Director Status
+The 3 modes of the Auto Pilot Flight Director are: 
+1: Automatic Mode – the pilot selects the mode (see LMOD, VMODE) and the control signals are calculated by the AP and executed by the flight controllers. 
+2. Manual mode – the pilot uses the stick and pedals to command the airplane. 
+0. This could be a managed mode or the AP is turned off. Usually on the ground. 
+ATEN: What does A/T mean?
+ATEN is AUTO THRUST ENGAGE STATUS. 1 indicates that the auto throttle is engaged. That is the engine N1 target speed is automatically set based on navigation commands (flight plan). 
+VMODE: What do the values of this parameter refer to in terms of modes?
+Translational control for the plane controls the flight path of the airplane with respect to air data, heading and navigation signal. It provides outputs to an inner-loop controller that controls the pitch, roll and yaw of the airplane. 
+There are two primary modes for translational control: VMODE is the vertical mode and LMOD is the Lateral mode. Within each mode, there are several selections a pilot can make. The enumerated integers of LMOD and VMODE reflect these selections. 
+We are asking experts to get the exact enumeration codes. Here are some examples to start the thinking: 
+In LMOD: the selection could be heading, instrument landing, capture, or follow pilot command
+In VMOD: the selection could be: speed, altitude, vertical speed, flight path, glide slope, or follow pilot commands. 
+LMOD: What do the values of this parameter refer to in terms of modes?
+Suspect this is used to track lateral cross track FMS response. The mode enumeration codes are currently being investigated. 
+PH: What do the values of this parameter refer to in terms of flight phase?
+The PH enumerated codes are: 
+0=Unknown
+1=Preflight
+2=Taxi
+3=Takeoff
+4=Climb
+5=Cruise
+6=Approach
+7=Rollout
+TMODE: What do the values of this parameter refer to in terms of modes?
+The mode enumeration codes are currently being investigated. 
+DWPT: What are the units?
+Answer has not been confirmed yet.  It is suspected to be in nautical miles. It is a measure of the deviation from the final destination, and will reduce gradually to zero after the flight is complete. 
+N1C: What does N1 Command refer to and what does N1 target refer to?
+Engine thrust is not measured by inferred. There are two surrogate values: (1) Engine fan speed (N1), (2) Engine Pressure Ratio (EPR). On this airplane N1 is used. 
+The relationship between the surrogates is usually (piecewise) linear while the plane is cruising. Depending on the flight plan, the airplane needs to achieve certain speed at certain altitudes. This implies that the engines need to generate the corresponding thrust – based on payload and in some cases noise constraints.  This is the target or set point for thrust. The N1 Target is a lookup surrogate value corresponding to this thrust target. Usually the targets are set after the plane has completed its initial climb (before this the thrust is maximum). 
+The actual speed of the airplane is also dependent on headwind and drag. Hence the target thrust must be corrected for these factors. After this correction is applied we get the commanded thrust. This is the total thrust the airplane is “demanding/requesting” from all four engines. The N1 Command is a lookup surrogate value corresponding to this thrust demand/request. 
+The N1 command is provided to each of the four engines. Depending on the control system and aerodynamic behavior of the airplane, usually the outer engines try to follow this command, while the inner engines may get a secondary command – usually 90-95% value. In either case, all four engines try to follow the individual N1 command they request. Unfortunately this “per engine N1 command” is not recorded.  While this is a “request” there is an override factor called the N1 Compensation. Such overrides are necessary to avoid engine flameout, speed and pressure surge within the engines. The parameter N1CO reflects this. If N1CO is set to 0, no such overrides are applied and the engine will try to follow N1-Command. Typically N1CO will be “1” during the initial climb and final approach phase of the flight. 
+The actual fan speeds achieved by the four engines are: N2.1, N2.2, N2.3 and N2.4. This will depend on the (a) age of the engine, (b) any sensor biases, (c) offsets in the fuel delivery system, (d) performance deterioration. Note that all four engines are controlled independently. 
+MRK: What do the values of this parameter refer to?
+Still under investigation.
+We have noticed that some of the binary state parameters are a bit unintuitive. For example LGDN shows 0 when you would expect the parameter to measure 1 to indicate that the landing gear is down. Since it looks like the opposite intuition is correct it is fairly easy to infer because we know landing gear is not deployed during cruise or for the majority of the flight.  If you know of other binary state variables that are measured this way it would be helpful to know their meaning. 
+The Weight-on-Wheels WOW parameter is like this. You would expect WOW = 1 implies there is weight on wheels and hence plane is on the ground; WOW=0 otherwise. This is not the case. In fact, WOW=1 implies that airplane is airborne. Often these variables are merely the status of an electrical circuit – when the airplane is on the ground, the switch is forced “open” (by gravity) and closes (usually by spring action) when gravity stops to act. The WOW and LDGN is merely a indication of this circuit. 
+What does the “_1” at the end of some files signify?
+The “_1” is an artifact of the anonymized file naming convention. Some files ended up with the same file name. To give the files a unique name the “_1” was appended to the end.  It does not have any meaning with respect to the contents of the file.
+

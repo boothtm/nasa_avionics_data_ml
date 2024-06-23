@@ -1,9 +1,10 @@
 # NASA_avionics_data_ML
 
-FYSA, The python and notebooks in this project were used as for research towards writing a paper ("A Gradient Descent Multi-Algorithm Grid Search Optimization of Deep Learning for Sensor Fusion") and are not stellar examples of proper software development.
+## FYI:
+- The python and notebooks in this project were used as for research towards writing a paper ("A Gradient Descent Multi-Algorithm Grid Search Optimization of Deep Learning for Sensor Fusion") and are not stellar examples of proper software development.
+  - Link to paper: https://par.nsf.gov/servlets/purl/10448779
+- There may also be some files missing since i couldn't upload my entire 18GB folder that I used to perform this research.
 
-Link to paper:
-https://par.nsf.gov/servlets/purl/10448779
 
 
 ## Getting started
